@@ -1,8 +1,9 @@
 from screens.login import Login
 from screens.register import Register
 from screens.entry import Entry
-from tkinter.messagebox import *
+from tkinter.messagebox import showwarning
 from dbConnector import Connector
+from session import Session
 
 class Manager:
 
@@ -11,6 +12,7 @@ class Manager:
         self.__db = Connector()
         self.__curent_screen = ""
         self.__previous_screen = ""
+        
         self.__screens = {
             "login" : Login(self, master, "300x250"),
             "register" : Register(self, master, "400x450"),
@@ -18,6 +20,7 @@ class Manager:
             }
 
         self.__geometries = self.__generate_geometries(resolution, relx, rely)
+        self.__user_session = Session(self)
 
     @property
     def master(self):
@@ -57,10 +60,13 @@ class Manager:
             geometries[screen] = "{}+{}+{}".format(size, posx, posy)
         return geometries
 
+    def clear_previous(self):
+        self.__previous_screen = ""
 
     def inicialize(self, app_name):
         self.screen = "login"
         self.master.title(app_name)
+        self.master.mainloop()
 
     def btnBack(self):
         self.screen = self.previous
@@ -81,11 +87,13 @@ class Manager:
 
         if results != []:
             for result in results:
-                dbIndex, dbFullname, dbUsername, dbEmail, dbPassword = result
+                dbUsername, dbPassword = (result[2], result[4])
                 if username == dbUsername:
                     if password == dbPassword:
-                        print("logged in")
+                        # create a user session
+                        # (index, fullname, username, email, password)
                         self.screen = "entry"
+                        self.__user_session.create_session(result)
                     else:
                         showwarning("LOGIN", "Wrong password")
                 else:

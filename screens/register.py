@@ -1,6 +1,6 @@
 from screens.screen import Screen
 import tkinter as tk
-from tkinter.messagebox import *
+from tkinter.messagebox import showwarning
 from tkinter import ttk
 import sys
 
