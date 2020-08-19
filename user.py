@@ -2,16 +2,22 @@
 class User:
 
     def __init__(self, user):
-        self.__fullname = user[1]
-        self.__username = user[2]
-        self.__email = user[3]
+        self.__fullname = user["fullname"]
+        self.__username = user["username"]
+        self.__email = user["email"]
 
     @property
-    def first_name (self):
-        return self.__fullname.split(" ")[0]
+    def fullname (self):
+        return self.__fullname
+    
+    @property
+    def username (self):
+        return self.__username
 
     @property
-    def last_name(self):
-        return self.__fullname.split(" ")[-1]
+    def email (self):
+        return self.__email
+
+
 
     

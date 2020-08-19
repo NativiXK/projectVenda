@@ -81,7 +81,7 @@ class Login (Screen):
         self.btnLogin.configure(pady="0")
         self.btnLogin.configure(relief="flat")
         self.btnLogin.configure(text='''Login''')
-        self.btnLogin.bind('<Button-1>',lambda e: self.controls.makeLogin(self.UserEntry.get(), self.PassEntry.get()))
+        self.btnLogin.bind('<Button-1>',lambda e: self.controls.session.makeLogin(self.UserEntry.get(), self.PassEntry.get()))
 
         self.btnRegister = tk.Button(self)
         self.btnRegister.place(relx=0.133, rely=0.64, height=45, width=85)

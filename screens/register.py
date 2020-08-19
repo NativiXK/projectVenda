@@ -23,7 +23,7 @@ class Register(Screen):
             showwarning("Info", "Fullfil all the fields!")
             return
         else:
-            self.controls.makeRegister(user)
+            self.controls.session.makeRegister(user)
 
     def __inicialize(self, master):
 

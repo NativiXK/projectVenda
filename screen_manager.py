@@ -1,15 +1,13 @@
 from screens.login import Login
 from screens.register import Register
 from screens.entry import Entry
-from tkinter.messagebox import showwarning
-from dbConnector import Connector
 from session import Session
 
 class Manager:
 
     def __init__(self, master, resolution, relx, rely):
         self.__master = master
-        self.__db = Connector()
+        self.__session = None
         self.__curent_screen = ""
         self.__previous_screen = ""
         
@@ -21,6 +19,14 @@ class Manager:
 
         self.__geometries = self.__generate_geometries(resolution, relx, rely)
         self.__user_session = Session(self)
+
+    @property
+    def session (self):
+        return self.__session
+
+    @session.setter
+    def session (self, session):
+        self.__session = session
 
     @property
     def master(self):
@@ -44,10 +50,6 @@ class Manager:
     @property
     def previous(self):
         return self.__previous_screen
-
-    @property
-    def db(self):
-        return self.__db
 
     def __generate_geometries(self, resolution, relx, rely):
         geometries = {}
@@ -76,39 +78,3 @@ class Manager:
 
     def btnRegister(self):
         self.screen = "register"
-
-    def makeLogin(self, username, password):
-        if username == "" or password == "":
-            showwarning("LOGIN", "Please fill all the fields to login")
-            return
-
-        self.db.query(""" SELECT * FROM USER WHERE email='{}' OR password='{}' """.format(username, password))
-        results = self.db.cursor.fetchall()
-
-        if results != []:
-            for result in results:
-                dbUsername, dbPassword = (result[2], result[4])
-                if username == dbUsername:
-                    if password == dbPassword:
-                        # create a user session
-                        # (index, fullname, username, email, password)
-                        self.screen = "entry"
-                        self.__user_session.create_session(result)
-                    else:
-                        showwarning("LOGIN", "Wrong password")
-                else:
-                    showwarning("LOGIN", "User not found")
-        else:
-            showwarning("LOGIN", "User not found")
-
-    def makeRegister(self, user):
-        self.db.query(""" SELECT * FROM USER WHERE email='{}' OR username='{}' """.format(user["email"], user["username"]))
-        results = self.db.cursor.fetchall()
-
-        if results == []:
-            user = (user["fullname"], user["username"], user["email"], user["password"])
-            self.db.query(""" INSERT INTO USER (fullname, username, email, password) values(?, ?, ?, ?) """, user)
-            self.db.commit()
-            self.screen = 'login'
-        else:
-            showwarning("Error", "User already registered")
