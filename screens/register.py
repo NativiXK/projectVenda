@@ -9,7 +9,6 @@ class Register(Screen):
     def __init__(self, controls, master, size):
         super().__init__(master, size)
         self.__controls = controls
-        self.__inicialize(master)
 
     @property
     def controls(self):
@@ -25,7 +24,7 @@ class Register(Screen):
         else:
             self.controls.session.makeRegister(user)
 
-    def __inicialize(self, master):
+    def inicialize(self, master):
 
         # for i in range(5):
         #     self.columnconfigure(i, minsize=60)

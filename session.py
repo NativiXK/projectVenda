@@ -15,6 +15,8 @@ class Session:
         return self.__manager
     
     @property
+    def user (self):
+        return self.__user
 
     @property
     def db (self):
@@ -23,10 +25,12 @@ class Session:
     def startup (self):
         self.__db = Connector()
         self.__manager.session = self
-
+    # gives the application a user session
     def give_session (self, user):
         self.__user = user
         self.manager.screen = "entry"
+        # print(self.manager.screen.get_vars()) 
+        print(self.manager.screen.get_var("username").set(f"""Seja bem vindo {user["fullname"].upper()}"""))
     
     def makeLogin (self, username, password):
         if username == "" or password == "":

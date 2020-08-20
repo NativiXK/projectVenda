@@ -6,13 +6,12 @@ class Login (Screen):
     def __init__(self, controls, master, size):
         super().__init__(master, size)
         self.__controls = controls
-        self.__inicialize()
 
     @property
     def controls(self):
         return self.__controls
 
-    def __inicialize(self):
+    def inicialize(self, master):
         #
         # for i in range(5):
         #     self.columnconfigure(i, minsize=60)

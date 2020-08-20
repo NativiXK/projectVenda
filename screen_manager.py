@@ -10,6 +10,7 @@ class Manager:
         self.__session = None
         self.__curent_screen = ""
         self.__previous_screen = ""
+        self.__string_vars = {}
         
         self.__screens = {
             "login" : Login(self, master, "300x250"),
@@ -31,19 +32,20 @@ class Manager:
     @property
     def master(self):
         return self.__master
-
+    # returns the actual screen object
     @property
     def screen(self):
-        return self.__curent_screen
-
+        return self.__screens[self.__curent_screen]
+    # load a screen by its name
     @screen.setter
     def screen(self, name):
 
         if self.__curent_screen != "":
-            self.__previous_screen = self.screen
-            self.__screens[self.screen].hide()
+            self.__previous_screen = self.__curent_screen
+            self.__screens[self.__curent_screen].hide()
 
         if name in self.__screens:
+            self.__screens[name].inicialize(self.master)
             self.__screens[name].show(self.__geometries[name])
             self.__curent_screen = name
 
