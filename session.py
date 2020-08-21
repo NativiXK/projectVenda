@@ -30,7 +30,7 @@ class Session:
         self.__user = user
         self.manager.screen = "entry"
         # print(self.manager.screen.get_vars()) 
-        print(self.manager.screen.get_var("username").set(f"""Seja bem vindo {user["fullname"].upper()}"""))
+        print(self.manager.screen.get_var("topInfoLabelVar").set(f"""Seja bem vindo {user["fullname"].upper()}"""))
     
     def makeLogin (self, username, password):
         if username == "" or password == "":
@@ -73,3 +73,6 @@ class Session:
             self.manager.screen = 'login'
         else:
             showwarning("Error", "User already registered")
+
+    def addProduct (self):
+        print(self.manager.screen.slaves())
