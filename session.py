@@ -75,4 +75,4 @@ class Session:
             showwarning("Error", "User already registered")
 
     def addProduct (self):
-        print(self.manager.screen.slaves())
+        print(self.manager.screen.EntryProductID.get())
