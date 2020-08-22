@@ -1,4 +1,4 @@
-from screens.screen import Screen
+from .screen import Screen
 import tkinter as tk
 
 class Login (Screen):
@@ -12,15 +12,6 @@ class Login (Screen):
         return self.__controls
 
     def inicialize(self, master):
-        #
-        # for i in range(5):
-        #     self.columnconfigure(i, minsize=60)
-        #
-        # self.lblBemVindo = tk.Label(self, text="Bem vindo", padx=10, pady=20, justify="center")
-        # self.lblBemVindo.pack(side="self", anchor="center")
-        #
-        # self.btnVoltar = tk.Button(text="Register", command=self.controls.btnRegister, width=10)
-        # self.btnVoltar.pack(after=self.lblBemVindo)
 
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
         _fgcolor = '#000000'  # X11 color: 'black'
@@ -29,6 +20,7 @@ class Login (Screen):
         _ana2color = '#ececec' # Closest X11 color: 'gray92'
 
         self.configure(background="#ffffff")
+        master.resizable(0, 0)
 
         self.UserEntry = tk.Entry(self)
         self.UserEntry.place(relx=0.333, rely=0.12,height=34, relwidth=0.583)
@@ -95,3 +87,6 @@ class Login (Screen):
         self.btnRegister.configure(relief="flat")
         self.btnRegister.configure(text='''Register''')
         self.btnRegister.bind('<Button-1>',lambda e: self.controls.btnRegister())
+
+
+        master.bind('<Key><Key-Return>', lambda e : self.controls.session.makeLogin(self.UserEntry.get(), self.PassEntry.get()))

@@ -26,10 +26,9 @@ class Screen (tk.Frame):
         return self.__size
 
     def show(self, geometry):
-        self.__master.geometry(geometry)
-        self.__master.resizable(0, 0)
+        
         self.place(relx=0, rely=0, relwidth=1, relheight=1)
-        #side="top", fill="both"
+        self.__master.geometry(geometry)
 
     def hide(self):
         self.place_forget()

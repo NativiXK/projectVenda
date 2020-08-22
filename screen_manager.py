@@ -1,7 +1,9 @@
 from screens.login import Login
 from screens.register import Register
 from screens.entry import Entry
+from screens.product import RegisterProduct, ModifyProduct, RemoveProduct, SearchProduct
 from session import Session
+import tkinter as tk
 
 class Manager:
 
@@ -15,7 +17,8 @@ class Manager:
         self.__screens = {
             "login" : Login(self, master, "300x250"),
             "register" : Register(self, master, "400x450"),
-            "entry" : Entry(self, master, "1200x800")
+            "entry" : Entry(self, master, "1200x800"),
+            # "registerProduct" : RegisterProduct(self, tk.Tk().withdraw(), "500x550")
             }
 
         self.__geometries = self.__generate_geometries(resolution, relx, rely)
@@ -46,6 +49,7 @@ class Manager:
 
         if name in self.__screens:
             self.__screens[name].inicialize(self.master)
+            print(self.__geometries[name])
             self.__screens[name].show(self.__geometries[name])
             self.__curent_screen = name
 
@@ -80,3 +84,15 @@ class Manager:
 
     def btnRegister(self):
         self.screen = "register"
+
+    def registerProduct(self):
+        self.screen = "registerProduct"
+
+    def modifyProduct(self):
+        pass
+
+    def removeProduct(self):
+        pass
+
+    def searchProduct(self):
+        pass

@@ -1,4 +1,4 @@
-from user import User
+from person import User, Employee
 from tkinter.messagebox import showwarning, showinfo
 from dbConnector import Connector
 
@@ -76,3 +76,4 @@ class Session:
 
     def addProduct (self):
         print(self.manager.screen.EntryProductID.get())
+        
