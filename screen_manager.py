@@ -49,8 +49,8 @@ class Manager:
 
         if name in self.__screens:
             self.__screens[name].inicialize(self.master)
-            print(self.__geometries[name])
-            self.__screens[name].show(self.__geometries[name])
+            self.__screens[name].show()
+            self.master.geometry(self.__geometries[name])
             self.__curent_screen = name
 
     @property
@@ -96,3 +96,5 @@ class Manager:
 
     def searchProduct(self):
         pass
+
+    
