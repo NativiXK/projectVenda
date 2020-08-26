@@ -1,4 +1,4 @@
-from .screen import Screen
+from screens.screen import Screen
 import tkinter as tk
 from tkinter import ttk
 from tkinter import StringVar, DoubleVar
@@ -24,7 +24,7 @@ class Entry (Screen):
 		return self.__controls
 
 	def showMenu (self):
-		self.frameMenu = tk.Frame(self)
+		self.frameMenu = tk.Frame(self)	
 		self.frameMenu.place(relx=0.003, rely=0.065, relheight=0.40, width=250)
 		self.frameMenu.configure(background="#28a4ff")
 		# add button product
@@ -37,6 +37,7 @@ class Entry (Screen):
 		self.buttonProduct.configure(borderwidth="1")
 		self.buttonProduct.configure(relief="flat")
 		self.buttonProduct.configure(text='''Products''')
+		self.buttonProduct.configure(command= self.controls.registerProduct)
 		# add button employee
 		self.buttonEmployee = tk.Button(self.frameMenu)
 		self.buttonEmployee.place(relx=0.002, y=46, height=44, relwidth=0.98)
@@ -57,12 +58,10 @@ class Entry (Screen):
 		self.buttonCostumer.configure(borderwidth="1")
 		self.buttonCostumer.configure(relief="flat")
 		self.buttonCostumer.configure(text='''Costumers''')
-
 		self.__menuOpened = True
 
 	def hideMenu(self):
 		self.frameMenu.place_forget()
-
 		self.__menuOpened = False
 
 	def inicialize(self, master):
@@ -84,54 +83,6 @@ class Entry (Screen):
 		master.title("Point of sale")
 		self.configure(background="#28a4ff")
 		master.unbind("<Key><Key-Return>")
-
-		# self.menubar = tk.Menu(self,font="TkMenuFont",bg='#28a4ff',fg='#28a4ff')
-		# master.configure(menu = tk.Menu())
-
-		# self.sub_menu = tk.Menu(self,
-		#         activebackground="#ececec",
-		#         activeborderwidth=1,
-		#         activeforeground="#000000",
-		#         background="#d9d9d9",
-		#         borderwidth=1,
-		#         disabledforeground="#a3a3a3",
-		#         foreground="#000000",
-		#         tearoff=0)
-		# self.menubar.add_cascade(menu=self.sub_menu,
-		#         label="Products")
-		# self.sub_menu.add_command(
-		#         label="Add")
-		# self.sub_menu.add_command(
-		#         label="Remove")
-		# self.sub_menu.add_command(
-		#         label="Modify")
-		# self.sub_menu.add_command(
-		#         label="Search")
-		# self.sub_menu1 = tk.Menu(self,
-		#         activebackground="#ececec",
-		#         activeborderwidth=1,
-		#         activeforeground="#000000",
-		#         background="#d9d9d9",
-		#         borderwidth=1,
-		#         disabledforeground="#a3a3a3",
-		#         foreground="#000000",
-		#         tearoff=0)
-		# self.menubar.add_cascade(menu=self.sub_menu1,
-		#         label="NewCascade")
-		# self.sub_menu12 = tk.Menu(self,
-		#         activebackground="#ececec",
-		#         activeborderwidth=1,
-		#         activeforeground="#000000",
-		#         background="#d9d9d9",
-		#         borderwidth=1,
-		#         disabledforeground="#a3a3a3",
-		#         foreground="#000000",
-		#         tearoff=0)
-		# self.menubar.add_cascade(menu=self.sub_menu12,
-		#         label="Options")
-		# self.sub_menu12.add_command(
-		#         label="History")
-		# self.sub_menu12.add_separator()
 
 		self.TopInfoLabel = tk.Label(self)
 		self.TopInfoLabel.place(relx=0.004, rely=0.004, height=47, width=1190)
@@ -395,7 +346,7 @@ class Entry (Screen):
 		self.EntryProductID.configure(insertbackground="black")
 		self.EntryProductID.configure(selectbackground="blue")
 		self.EntryProductID.configure(selectforeground="white")
-		self.EntryProductID.bind('<Key><Key-Return>',lambda e: self.controls.se.addProduct())
+		self.EntryProductID.bind('<Key><Key-Return>',lambda e: self.controls.session.addProduct())
 
 		self.LabelProductInput = tk.Label(self.FrameInput)
 		self.LabelProductInput.place(relx=0.067, rely=0.279, height=41

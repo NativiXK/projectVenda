@@ -13,16 +13,18 @@ class Manager:
         self.__curent_screen = ""
         self.__previous_screen = ""
         self.__string_vars = {}
-        
+        self.__current_popupScreen = ""
+
         self.__screens = {
             "login" : Login(self, master, "300x250"),
             "register" : Register(self, master, "400x450"),
             "entry" : Entry(self, master, "1200x800"),
-            # "registerProduct" : RegisterProduct(self, tk.Tk().withdraw(), "500x550")
+            "popup" : {
+                "registerProduct" : RegisterProduct(self, "400x700"),
+                }
             }
 
         self.__geometries = self.__generate_geometries(resolution, relx, rely)
-        self.__user_session = Session(self)
 
     @property
     def session (self):
@@ -54,18 +56,45 @@ class Manager:
             self.__curent_screen = name
 
     @property
+    def popupScreen(self):
+        return self.__current_popupScreen
+
+    @popupScreen.setter
+    def popupScreen(self, name):
+        
+        if self.__current_popupScreen != "":
+            print(self.__current_popupScreen)
+            self.__screens["popup"][name].destroy()
+
+        if name in self.__screens["popup"]:
+            print(self.__geometries["popup"])
+            self.__screens["popup"][name].inicialize(self.__geometries["popup"][name])
+            self.__current_popupScreen = name
+
+    @property
     def previous(self):
         return self.__previous_screen
 
     def __generate_geometries(self, resolution, relx, rely):
         geometries = {}
         for screen in self.__screens:
-            size = self.__screens[screen].size
-            screen_res = int(size.split("x")[0]), int(size.split("x")[1])
-            posx = str(int(resolution[0] * relx - (screen_res[0] / 2)))
-            posy = str(int(resolution[1] * rely - (screen_res[1] / 2)))
+            if screen == "popup":
+                popups = {}
+                for screen in self.__screens["popup"]:
+                    size = self.__screens["popup"][screen].size
+                    screen_res = int(size.split("x")[0]), int(size.split("x")[1])
+                    posx = str(int(resolution[0] * relx - (screen_res[0] / 2)))
+                    posy = str(int(resolution[1] * rely - (screen_res[1] / 2)))
 
-            geometries[screen] = "{}+{}+{}".format(size, posx, posy)
+                    popups[screen] = "{}+{}+{}".format(size, posx, posy)
+                geometries["popup"] = popups
+            else:
+                size = self.__screens[screen].size
+                screen_res = int(size.split("x")[0]), int(size.split("x")[1])
+                posx = str(int(resolution[0] * relx - (screen_res[0] / 2)))
+                posy = str(int(resolution[1] * rely - (screen_res[1] / 2)))
+
+                geometries[screen] = "{}+{}+{}".format(size, posx, posy)
         return geometries
 
     def clear_previous(self):
@@ -86,7 +115,8 @@ class Manager:
         self.screen = "register"
 
     def registerProduct(self):
-        self.screen = "registerProduct"
+        self.popupScreen = "registerProduct"
+        pass
 
     def modifyProduct(self):
         pass

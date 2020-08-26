@@ -29,8 +29,6 @@ class Session:
     def give_session (self, user):
         self.__user = user
         self.manager.screen = "entry"
-        # print(self.manager.screen.get_vars()) 
-        print(self.manager.screen.get_var("topInfoLabelVar").set(f"""Seja bem vindo {user["fullname"].upper()}"""))
     
     def makeLogin (self, username, password):
         if username == "" or password == "":
