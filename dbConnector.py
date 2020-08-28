@@ -6,7 +6,7 @@ class Connector:
         self.__db = db.connect("database.db")
         self.__cursor = self.db.cursor()
         if not self.tablesExists():
-            self.createTables()
+            self.create_tables()
 
     @property
     def db(self):
@@ -23,19 +23,48 @@ class Connector:
         self.db.commit()
 
     def tablesExists(self):
-        self.query("""SELECT count(name) FROM sqlite_master WHERE type='table' AND name='USER' """)
+        self.query("""SELECT count(name) 
+            FROM sqlite_master 
+            WHERE type='table' 
+            AND name= 'users'
+            OR name= 'products'
+            OR name= 'employees'
+            OR name= 'costumers'
+            """)
         result = self.cursor.fetchone()
 
-        if result[0] == 1:
+        if result[0] == 4:
             return True
         else:
             return False
 
-    def createTables(self):
-        self.query("""CREATE TABLE USER (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            fullname TEXT,
-            username TEXT,
-            email TEXT,
-            password TEXT
-        );""")
+    def create_tables(self):
+        self.query("""
+        pragma foreign_keys = ON;
+
+        CREATE TABLE users (
+            user_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            fullname TEXT NOT NULL,
+            username TEXT NOT NULL,
+            email TEXT NOT NULL,
+            password TEXT NOT NULL
+        );
+
+        CREATE TABLE products (
+            product_id VARCHAR(50) PRIMARY KEY NOT NULL,
+            description TEXT NOT NULL,
+            price DOUBLE NOT NULL,
+            user_id INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (user_id)
+        );
+
+        CREATE TABLE employees (
+            employee_id VARCHAR(50) PRIMARY KEY NOT NULL,
+            fullname TEXT NOT NULL,
+            emp_role INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (user_id)
+        );
+
+
+        """)
