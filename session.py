@@ -25,17 +25,19 @@ class Session:
     def startup (self):
         self.__db = Connector()
         self.__manager.session = self
+        self.manager.master.resizable(0, 0)
     # gives the application a user session
     def give_session (self, user):
         self.__user = user
         self.manager.screen = "entry"
+        self.manager.screen.get_var("topInfoLabelVar").set("Seja bem vindo {}".format(user["username"]))
     
     def makeLogin (self, username, password):
         if username == "" or password == "":
             showwarning("LOGIN", "Please fill all the fields to login")
             return
 
-        self.db.query(""" SELECT * FROM USER WHERE email='{}' OR password='{}' """.format(username, password))
+        self.db.query(""" SELECT * FROM users WHERE email='{}' OR password='{}' """.format(username, password))
         results = self.db.cursor.fetchall()
 
         if results != []:
@@ -60,12 +62,12 @@ class Session:
             showwarning("LOGIN", "User not found")
 
     def makeRegister (self, user):
-        self.db.query(""" SELECT * FROM USER WHERE email='{}' OR username='{}' """.format(user["email"], user["username"]))
+        self.db.query(""" SELECT * FROM users WHERE email='{}' OR username='{}' """.format(user["email"], user["username"]))
         results = self.db.cursor.fetchall()
 
         if results == []:
             user = (user["fullname"], user["username"], user["email"], user["password"])
-            self.db.query(""" INSERT INTO USER (fullname, username, email, password) values(?, ?, ?, ?) """, user)
+            self.db.query(""" INSERT INTO users (fullname, username, email, password) values(?, ?, ?, ?) """, user)
             self.db.commit()
             showinfo("Register", message="Registered successfully")
             self.manager.screen = 'login'

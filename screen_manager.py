@@ -14,13 +14,14 @@ class Manager:
         self.__previous_screen = ""
         self.__string_vars = {}
         self.__current_popupScreen = ""
-
+        """ size = %W x %H """
         self.__screens = {
-            "login" : Login(self, master, "300x250"),
-            "register" : Register(self, master, "400x450"),
-            "entry" : Entry(self, master, "1200x800"),
+            "login" : Login(self, master, "0.25x0.365"),
+            "register" : Register(self, master, "0.3x0.47"),
+            "entry" : Entry(self, master, "0.9x0.9"),
             "popup" : {
-                "registerProduct" : RegisterProduct(self, "400x700"),
+                "Products" : RegisterProduct(self, "0.2x0.35"),
+                # "Employees" : Employees(self, "400x400")
                 }
             }
 
@@ -82,19 +83,20 @@ class Manager:
                 popups = {}
                 for screen in self.__screens["popup"]:
                     size = self.__screens["popup"][screen].size
-                    screen_res = int(size.split("x")[0]), int(size.split("x")[1])
+                    screen_res = int(resolution[0] * float(size.split("x")[0])), int(resolution[1] * float(size.split("x")[1]))
                     posx = str(int(resolution[0] * relx - (screen_res[0] / 2)))
                     posy = str(int(resolution[1] * rely - (screen_res[1] / 2)))
-
-                    popups[screen] = "{}+{}+{}".format(size, posx, posy)
+                        
+                    popups[screen] = "{}x{}+{}+{}".format(screen_res[0], screen_res[1], posx, posy)
                 geometries["popup"] = popups
             else:
                 size = self.__screens[screen].size
-                screen_res = int(size.split("x")[0]), int(size.split("x")[1])
+                screen_res = int(resolution[0] * float(size.split("x")[0])), int(resolution[1] * float(size.split("x")[1]))
+                
                 posx = str(int(resolution[0] * relx - (screen_res[0] / 2)))
                 posy = str(int(resolution[1] * rely - (screen_res[1] / 2)))
 
-                geometries[screen] = "{}+{}+{}".format(size, posx, posy)
+                geometries[screen] = "{}x{}+{}+{}".format(screen_res[0], screen_res[1], posx, posy)
         return geometries
 
     def clear_previous(self):
@@ -114,8 +116,10 @@ class Manager:
     def btnRegister(self):
         self.screen = "register"
 
-    def registerProduct(self):
-        self.popupScreen = "registerProduct"
+    def Products(self):
+        self.popupScreen = "Products"
+    
+    def Employees(self):
         pass
 
     def modifyProduct(self):

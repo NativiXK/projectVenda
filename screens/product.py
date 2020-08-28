@@ -1,6 +1,8 @@
 from screens.screen import Screen
 import tkinter as tk
 
+
+
 class RegisterProduct:
 
     def __init__ (self, controls, size):
@@ -22,6 +24,7 @@ class RegisterProduct:
         self.__toplevel = tk.Tk()
         self.__toplevel.geometry(geometry)
         self.__toplevel.title("Products control")
+        self.__toplevel.resizable(0, 0)
 
 class ModifyProduct (Screen):
 

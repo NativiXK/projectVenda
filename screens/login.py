@@ -20,7 +20,6 @@ class Login (Screen):
         _ana2color = '#ececec' # Closest X11 color: 'gray92'
 
         self.configure(background="#ffffff")
-        master.resizable(0, 0)
 
         self.UserEntry = tk.Entry(self)
         self.UserEntry.place(relx=0.333, rely=0.12,height=34, relwidth=0.583)

@@ -37,7 +37,7 @@ class Entry (Screen):
 		self.buttonProduct.configure(borderwidth="1")
 		self.buttonProduct.configure(relief="flat")
 		self.buttonProduct.configure(text='''Products''')
-		self.buttonProduct.configure(command= self.controls.registerProduct)
+		self.buttonProduct.configure(command= self.controls.Products)
 		# add button employee
 		self.buttonEmployee = tk.Button(self.frameMenu)
 		self.buttonEmployee.place(relx=0.002, y=46, height=44, relwidth=0.98)
@@ -85,7 +85,7 @@ class Entry (Screen):
 		master.unbind("<Key><Key-Return>")
 
 		self.TopInfoLabel = tk.Label(self)
-		self.TopInfoLabel.place(relx=0.004, rely=0.004, height=47, width=1190)
+		self.TopInfoLabel.place(relx=0.004, rely=0.004, relheight=0.057, relwidth=0.993)
 		self.TopInfoLabel.configure(activebackground="#f9f9f9")
 		self.TopInfoLabel.configure(activeforeground="black")
 		self.TopInfoLabel.configure(background="#d9d9d9")
@@ -97,7 +97,7 @@ class Entry (Screen):
 		self.TopInfoLabel.configure(textvariable= super().get_var("topInfoLabelVar"))
 		
 		self.buttonMenu = tk.Button(self)
-		self.buttonMenu.place(relx=0.004, rely=0.004, height=47, width=100)
+		self.buttonMenu.place(relx=0.004, rely=0.004, relheight=0.057, width=100)
 		self.buttonMenu.configure(background="white")
 		self.buttonMenu.configure(font="-family {Segoe UI} -size 16 -weight normal -slant roman -underline 0 -overstrike 0")
 		self.buttonMenu.configure(pady="0")

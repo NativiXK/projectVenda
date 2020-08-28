@@ -10,4 +10,3 @@ master = tk.Tk()
 manager = Manager(master, resolution, 0.48, 0.46)
 this_session = Session(manager)
 this_session.manager.inicialize("Vendas")
-    
