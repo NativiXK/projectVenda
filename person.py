@@ -4,16 +4,21 @@ class User:
     def __init__(self, user):
         """
         Expects a user dict {
+            "id" : value
             "fullname" : value,
             "username" : value,
             "email" : value
         }
         """
         check_values = lambda key : user[key] if (key in user.keys()) else ""
-    
+        self.__id = check_values("id")
         self.__fullname = check_values("fullname")
         self.__username = check_values("username")
         self.__email = check_values("email")
+
+    @property
+    def ID (self):
+        return self.__id
 
     @property
     def fullname (self):

@@ -28,7 +28,7 @@ class Session:
         self.manager.master.resizable(0, 0)
     # gives the application a user session
     def give_session (self, user):
-        self.__user = user
+        self.__user = User(user)
         self.manager.screen = "entry"
         self.manager.screen.get_var("topInfoLabelVar").set("Seja bem vindo {}".format(user["username"]))
     
@@ -48,6 +48,7 @@ class Session:
                         # create a user session
                         # (index, fullname, username, email, password)
                         user = {
+                            "id" : result[0],
                             "fullname" : result[1],
                             "username" : result[2],
                             "email" : result[3],
@@ -75,5 +76,31 @@ class Session:
             showwarning("Error", "User already registered")
 
     def addProduct (self):
-        print(self.manager.screen.EntryProductID.get())
+        product_id = self.manager.screen.EntryProductID.get()
+        
+        product_info = self.db.get_product(self.user.ID, product_id)
+        self.manager.screen.EntryProductID.delete(0, 200)
+        # clears all info in product frame
+        self.__clear_prod_frame()
+
+        # check if product found
+        if len(product_info) == 0:
+            # display message
+            self.manager.screen.get_var("topInfoLabelVar").set("Produto não encontrado")
+            return
+        # clear message
+        self.manager.screen.get_var("topInfoLabelVar").set("")
+        
+        self.__update_prod_frame(product_info[0])
+
+    # clears all information retained in product frame
+    def __clear_prod_frame(self):
+        self.manager.screen.get_var("productIdVar").set("")
+        self.manager.screen.get_var("productNameVar").set("")
+        self.manager.screen.get_var("productPriceVar").set("")
+
+    def __update_prod_frame (self, product_info):
+        self.manager.screen.get_var("productIdVar").set(product_info[0])
+        self.manager.screen.get_var("productNameVar").set(product_info[1])
+        self.manager.screen.get_var("productPriceVar").set(product_info[2])
         

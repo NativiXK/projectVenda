@@ -11,6 +11,9 @@ class Login (Screen):
     def controls(self):
         return self.__controls
 
+    def btnScreenRegister (self):
+        self.controls.screen = "register"
+
     def inicialize(self, master):
 
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -85,7 +88,7 @@ class Login (Screen):
         self.btnRegister.configure(pady="0")
         self.btnRegister.configure(relief="flat")
         self.btnRegister.configure(text='''Register''')
-        self.btnRegister.bind('<Button-1>',lambda e: self.controls.btnRegister())
+        self.btnRegister.bind('<Button-1>', self.btnScreenRegister)
 
 
         master.bind('<Key><Key-Return>', lambda e : self.controls.session.makeLogin(self.UserEntry.get(), self.PassEntry.get()))

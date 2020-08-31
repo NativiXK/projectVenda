@@ -68,3 +68,11 @@ class Connector:
 
 
         """)
+
+    def get_product(self, user_id, prod_id):
+        self.query("SELECT * FROM products WHERE user_id = '{}' AND product_id = '{}' ".format(user_id, prod_id))
+        results = self.cursor.fetchall()
+        if len(results) == 0:
+            return []
+        else:
+            return results

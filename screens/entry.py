@@ -10,18 +10,21 @@ class Entry (Screen):
 		super().__init__(master, size)
 		self.__controls = controls
 		super().add_var("topInfoLabelVar", StringVar(self))
-		super().add_var("ProductPriceVar", DoubleVar(self))
-		super().add_var("ProductNameVar", StringVar(self))
-		super().add_var("ProductIdVar", StringVar(self))
-		super().add_var("EmployeeIdVar", StringVar(self))
-		super().add_var("EmployeeNameVar", StringVar(self))
-		super().add_var("LoginEmployeeVar", StringVar(self).set("Login"))
+		super().add_var("productPriceVar", DoubleVar(self))
+		super().add_var("productNameVar", StringVar(self))
+		super().add_var("productIdVar", StringVar(self))
+		super().add_var("employeeIdVar", StringVar(self))
+		super().add_var("employeeNameVar", StringVar(self))
+		super().add_var("loginEmployeeVar", StringVar(self).set("Login"))
 		self.__menuOpened = False
 		# self.__inicialize(master)
 
 	@property
 	def controls(self):
 		return self.__controls
+
+	def btnMenuProducts(self):
+		self.controls.popupScreens = "products"
 
 	def showMenu (self):
 		self.frameMenu = tk.Frame(self)	
@@ -37,7 +40,7 @@ class Entry (Screen):
 		self.buttonProduct.configure(borderwidth="1")
 		self.buttonProduct.configure(relief="flat")
 		self.buttonProduct.configure(text='''Products''')
-		self.buttonProduct.configure(command= self.controls.btnProducts)
+		self.buttonProduct.configure(command= self.btnMenuProducts)
 		# add button employee
 		self.buttonEmployee = tk.Button(self.frameMenu)
 		self.buttonEmployee.place(relx=0.002, y=46, height=44, relwidth=0.98)
@@ -85,7 +88,7 @@ class Entry (Screen):
 		master.unbind("<Key><Key-Return>")
 
 		self.TopInfoLabel = tk.Label(self)
-		self.TopInfoLabel.place(relx=0.004, rely=0.004, relheight=0.057, relwidth=0.993)
+		self.TopInfoLabel.place(relx=0.004, rely=0.004, relheight=0.057, relwidth=0.992)
 		self.TopInfoLabel.configure(activebackground="#f9f9f9")
 		self.TopInfoLabel.configure(activeforeground="black")
 		self.TopInfoLabel.configure(background="#d9d9d9")
@@ -116,7 +119,7 @@ class Entry (Screen):
 		self.FrameProduct.configure(highlightcolor="black")
 
 		self.LabelProduct = tk.Label(self.FrameProduct)
-		self.LabelProduct.place(relx=0.0, rely=0.0, height=40, width=771)
+		self.LabelProduct.place(relx=0.15, rely=0.0, height=40, width=771)
 		self.LabelProduct.configure(activebackground="#f9f9f9")
 		self.LabelProduct.configure(activeforeground="black")
 		self.LabelProduct.configure(background="#d9d9d9")
@@ -153,7 +156,7 @@ class Entry (Screen):
 		self.LabelProductName.configure(highlightbackground="#d9d9d9")
 		self.LabelProductName.configure(highlightcolor="black")
 		self.LabelProductName.configure(text='''Name''')
-		# self.LabelProductName.configure()
+		self.LabelProductName.configure(textvariable= super().get_var("productNameVar"))
 
 		self.Label1 = tk.Label(self.FrameProduct)
 		self.Label1.place(relx=0.447, rely=0.57, height=32, width=34)
@@ -168,8 +171,7 @@ class Entry (Screen):
 		self.Label1.configure(text='''R$ :''')
 
 		self.LabelProductPrice = tk.Label(self.FrameProduct)
-		self.LabelProductPrice.place(relx=0.521, rely=0.57, height=32, width=345)
-
+		self.LabelProductPrice.place(relx=0.498, rely=0.57, height=32, width=345)
 		self.LabelProductPrice.configure(activebackground="#f9f9f9")
 		self.LabelProductPrice.configure(activeforeground="black")
 		self.LabelProductPrice.configure(background="#ffffff")
@@ -179,7 +181,7 @@ class Entry (Screen):
 		self.LabelProductPrice.configure(highlightbackground="#d9d9d9")
 		self.LabelProductPrice.configure(highlightcolor="black")
 		self.LabelProductPrice.configure(text='''Price''')
-		# self.LabelProductPrice.configure()
+		self.LabelProductPrice.configure(textvariable= super().get_var("productPriceVar"))
 
 		self.LabelProductId = tk.Label(self.FrameProduct)
 		self.LabelProductId.place(relx=0.447, rely=0.267, height=32, width=402)
@@ -192,6 +194,7 @@ class Entry (Screen):
 		self.LabelProductId.configure(highlightbackground="#d9d9d9")
 		self.LabelProductId.configure(highlightcolor="black")
 		self.LabelProductId.configure(text='''ID''')
+		self.LabelProductId.configure(textvariable= super().get_var("productIdVar"))
 
 		self.FrameSummary = tk.Frame(self)
 		self.FrameSummary.place(relx=0.003, rely=0.065, relheight=0.6
@@ -203,7 +206,7 @@ class Entry (Screen):
 		self.FrameSummary.configure(highlightcolor="black")
 
 		self.LabelSummary = tk.Label(self.FrameSummary)
-		self.LabelSummary.place(relx=0.0, rely=0.0, height=41, width=417)
+		self.LabelSummary.place(relx=0.15, rely=0.0, height=41, width=417)
 		self.LabelSummary.configure(activebackground="#f9f9f9")
 		self.LabelSummary.configure(activeforeground="black")
 		self.LabelSummary.configure(background="#d9d9d9")
@@ -242,7 +245,7 @@ class Entry (Screen):
 		self.FrameEmployee.configure(highlightcolor="black")
 
 		self.LabelEmployee = tk.Label(self.FrameEmployee)
-		self.LabelEmployee.place(relx=0.0, rely=0.0, height=43, width=771)
+		self.LabelEmployee.place(relx=0.15, rely=0.0, height=43, width=771)
 		self.LabelEmployee.configure(activebackground="#f9f9f9")
 		self.LabelEmployee.configure(activeforeground="black")
 		self.LabelEmployee.configure(background="#d9d9d9")
@@ -295,7 +298,7 @@ class Entry (Screen):
 		# self.LabelEmployeeName.configure()
 
 		self.ButtonLoginEmployee = tk.Button(self.FrameEmployee)
-		self.ButtonLoginEmployee.place(relx=0.547, rely=0.691, height=44
+		self.ButtonLoginEmployee.place(relx=0.5, rely=0.691, height=44
 			, width=100)
 		self.ButtonLoginEmployee.configure(activebackground="#ececec")
 		self.ButtonLoginEmployee.configure(activeforeground="#000000")
@@ -320,7 +323,7 @@ class Entry (Screen):
 		self.FrameInput.configure(highlightcolor="black")
 
 		self.LabelInputs = tk.Label(self.FrameInput)
-		self.LabelInputs.place(relx=0.0, rely=0.0, height=43, width=1191)
+		self.LabelInputs.place(relx=0.15, rely=0.0, height=43, width=1191)
 		self.LabelInputs.configure(activebackground="#f9f9f9")
 		self.LabelInputs.configure(activeforeground="black")
 		self.LabelInputs.configure(background="#d9d9d9")
@@ -346,6 +349,7 @@ class Entry (Screen):
 		self.EntryProductID.configure(insertbackground="black")
 		self.EntryProductID.configure(selectbackground="blue")
 		self.EntryProductID.configure(selectforeground="white")
+		self.EntryProductID.focus()
 		self.EntryProductID.bind('<Key><Key-Return>',lambda e: self.controls.session.addProduct())
 
 		self.LabelProductInput = tk.Label(self.FrameInput)

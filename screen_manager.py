@@ -21,7 +21,10 @@ class Manager:
             "entry" : Entry(self, master, "0.9x0.9"),
             "popup" : {
                 "products" : Products(self, "0.2x0.35"),
-                "registerProduct" : RegisterProduct(self, "0.3x0.45")
+                "registerProduct" : RegisterProduct(self, "0.3x0.45"),
+                "modifyProduct" : ModifyProduct(self, "0.3x0.45"),
+                "removeProduct" : RemoveProduct(self, "0.3x0.45"),
+                "searchProduct" : SearchProduct(self, "0.3x0.45"),
                 # "Employees" : Employees(self, "400x400")
                 }
             }
@@ -59,17 +62,15 @@ class Manager:
 
     @property
     def popupScreen(self):
-        return self.__current_popupScreen
+        return self.__screens["popup"][self.__current_popupScreen]
 
     @popupScreen.setter
     def popupScreen(self, name):
-        
+
         if self.__current_popupScreen != "":
-            print(self.__current_popupScreen)
-            self.__screens["popup"][name].destroy()
+            self.__screens["popup"][self.__current_popupScreen].destroy()
 
         if name in self.__screens["popup"]:
-            print(self.__geometries["popup"])
             self.__screens["popup"][name].inicialize(self.__geometries["popup"][name])
             self.__current_popupScreen = name
 
@@ -114,22 +115,8 @@ class Manager:
     def exit(self):
         self.master.destroy()
 
-    def btnRegister(self):
-        self.screen = "register"
-
-    def btnProducts(self):
-        self.popupScreen = "products"
-    
     def btnEmployees(self):
         pass
 
-    def btnModifyProduct(self):
-        pass
-
-    def btnRemoveProduct(self):
-        pass
-
-    def btnSearchProduct(self):
-        pass
 
     
