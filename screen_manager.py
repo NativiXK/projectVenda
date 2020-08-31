@@ -1,7 +1,7 @@
 from screens.login import Login
 from screens.register import Register
 from screens.entry import Entry
-from screens.product import RegisterProduct, ModifyProduct, RemoveProduct, SearchProduct
+from screens.product import Products,RegisterProduct, ModifyProduct, RemoveProduct, SearchProduct
 from session import Session
 import tkinter as tk
 
@@ -16,11 +16,12 @@ class Manager:
         self.__current_popupScreen = ""
         """ size = %W x %H """
         self.__screens = {
-            "login" : Login(self, master, "0.25x0.365"),
+            "login" : Login(self, master, "0.2x0.3"),
             "register" : Register(self, master, "0.3x0.47"),
             "entry" : Entry(self, master, "0.9x0.9"),
             "popup" : {
-                "Products" : RegisterProduct(self, "0.2x0.35"),
+                "products" : Products(self, "0.2x0.35"),
+                "registerProduct" : RegisterProduct(self, "0.3x0.45")
                 # "Employees" : Employees(self, "400x400")
                 }
             }
@@ -116,19 +117,19 @@ class Manager:
     def btnRegister(self):
         self.screen = "register"
 
-    def Products(self):
-        self.popupScreen = "Products"
+    def btnProducts(self):
+        self.popupScreen = "products"
     
-    def Employees(self):
+    def btnEmployees(self):
         pass
 
-    def modifyProduct(self):
+    def btnModifyProduct(self):
         pass
 
-    def removeProduct(self):
+    def btnRemoveProduct(self):
         pass
 
-    def searchProduct(self):
+    def btnSearchProduct(self):
         pass
 
     
