@@ -26,6 +26,15 @@ class Entry (Screen):
 	def btnMenuProducts(self):
 		self.controls.popupScreens = "products"
 
+	def show_message(self, message):
+		super().get_var("topInfoLabelVar").set(message)
+
+	def clear_message(self):
+		super().get_var("topInfoLabelVar").set("")
+
+	def append_summary_info(self):
+		
+
 	def showMenu (self):
 		self.frameMenu = tk.Frame(self)	
 		self.frameMenu.place(relx=0.003, rely=0.065, relheight=0.40, width=250)
@@ -228,6 +237,7 @@ class Entry (Screen):
 		self.TextSaleSummary.configure(highlightcolor="black")
 		self.TextSaleSummary.configure(insertbackground="black")
 		self.TextSaleSummary.configure(relief="flat")
+		self.TextSaleSummary.configure(state="disabled")
 		self.TextSaleSummary.configure(selectbackground="blue")
 		self.TextSaleSummary.configure(selectforeground="white")
 		self.TextSaleSummary.configure(wrap="word")

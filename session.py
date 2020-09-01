@@ -8,6 +8,7 @@ class Session:
         self.__manager = manager
         self.__db = None
         self.__user = None
+        self.__sale = None
         self.startup()
         
     @property
@@ -55,6 +56,7 @@ class Session:
                         }
 
                         self.give_session(user)
+                        break
                     else:
                         showwarning("LOGIN", "Wrong password")
                 else:
@@ -76,22 +78,25 @@ class Session:
             showwarning("Error", "User already registered")
 
     def addProduct (self):
+        # get the product id from entry screen
         product_id = self.manager.screen.EntryProductID.get()
-        
+        # search for the product in the database
         product_info = self.db.get_product(self.user.ID, product_id)
+        # clean entry id field
         self.manager.screen.EntryProductID.delete(0, 200)
         # clears all info in product frame
         self.__clear_prod_frame()
-
+        # clear message
+        self.manager.screen.clear_message()
         # check if product found
         if len(product_info) == 0:
             # display message
-            self.manager.screen.get_var("topInfoLabelVar").set("Produto não encontrado")
+            self.manager.screen.show_message("Produto não encontrado")
             return
-        # clear message
-        self.manager.screen.get_var("topInfoLabelVar").set("")
-        
+        # update product frame
         self.__update_prod_frame(product_info[0])
+        
+        self.__insert_record_summary()
 
     # clears all information retained in product frame
     def __clear_prod_frame(self):
@@ -103,4 +108,6 @@ class Session:
         self.manager.screen.get_var("productIdVar").set(product_info[0])
         self.manager.screen.get_var("productNameVar").set(product_info[1])
         self.manager.screen.get_var("productPriceVar").set(product_info[2])
-        
+    
+    def __insert_record_summary(self, product_info):
+        pass
