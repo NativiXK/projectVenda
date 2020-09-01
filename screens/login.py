@@ -88,7 +88,7 @@ class Login (Screen):
         self.btnRegister.configure(pady="0")
         self.btnRegister.configure(relief="flat")
         self.btnRegister.configure(text='''Register''')
-        self.btnRegister.bind('<Button-1>', self.btnScreenRegister)
+        self.btnRegister.configure(command = self.btnScreenRegister)
 
 
         master.bind('<Key><Key-Return>', lambda e : self.controls.session.makeLogin(self.UserEntry.get(), self.PassEntry.get()))
