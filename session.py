@@ -1,6 +1,8 @@
 from person import User, Employee
 from tkinter.messagebox import showwarning, showinfo
 from dbConnector import Connector
+from sale import Sale
+from datetime import datetime
 
 class Session:
 
@@ -23,10 +25,15 @@ class Session:
     def db (self):
         return self.__db
 
+    @property
+    def sale(self):
+        return self.__sale
+
     def startup (self):
         self.__db = Connector()
         self.__manager.session = self
         self.manager.master.resizable(0, 0)
+    
     # gives the application a user session
     def give_session (self, user):
         self.__user = User(user)
@@ -77,7 +84,17 @@ class Session:
         else:
             showwarning("Error", "User already registered")
 
+    def new_sale(self):
+        self.__clear_prod_frame()
+        self.__clear_summary()
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        self.__sale = Sale("employee", now)
+
+
     def addProduct (self):
+        if self.__sale is None:
+            self.new_sale()
+
         # get the product id from entry screen
         product_id = self.manager.screen.EntryProductID.get()
         # search for the product in the database
@@ -96,18 +113,26 @@ class Session:
         # update product frame
         self.__update_prod_frame(product_info[0])
         
-        self.__insert_record_summary()
+        self.__insert_record_summary(product_info[0])
 
     # clears all information retained in product frame
     def __clear_prod_frame(self):
         self.manager.screen.get_var("productIdVar").set("")
         self.manager.screen.get_var("productNameVar").set("")
         self.manager.screen.get_var("productPriceVar").set("")
+    
+    # clear sale summary
+    def __clear_summary(self):
+        self.manager.screen.clear_summary()
 
+    # display the product info on product frame
     def __update_prod_frame (self, product_info):
         self.manager.screen.get_var("productIdVar").set(product_info[0])
         self.manager.screen.get_var("productNameVar").set(product_info[1])
         self.manager.screen.get_var("productPriceVar").set(product_info[2])
     
+    # will insert the product into sale object and then ask entry to update summary
     def __insert_record_summary(self, product_info):
-        pass
+        self.sale.add_product(product_info)
+        self.manager.screen.update_summary(self.sale.__str__())
+        

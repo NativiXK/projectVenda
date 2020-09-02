@@ -32,8 +32,18 @@ class Entry (Screen):
 	def clear_message(self):
 		super().get_var("topInfoLabelVar").set("")
 
-	def append_summary_info(self):
-		
+	def update_summary(self, Summary):
+		self.TextSaleSummary.configure(state="normal")
+		self.TextSaleSummary.delete(1.0, "end")
+		self.TextSaleSummary.insert(1.0, Summary)
+		lines = self.TextSaleSummary.count(1.0, "end","lines")
+		self.TextSaleSummary.yview_scroll(lines[0], "units")
+		self.TextSaleSummary.configure(state="disabled")
+
+	def clear_summary(self):
+		self.TextSaleSummary.configure(state="normal")
+		self.TextSaleSummary.delete(1.0, "end")
+		self.TextSaleSummary.configure(state="disabled")
 
 	def showMenu (self):
 		self.frameMenu = tk.Frame(self)	
@@ -94,7 +104,12 @@ class Entry (Screen):
 
 		master.title("Point of sale")
 		self.configure(background="#28a4ff")
+
+		# top level bindings
 		master.unbind("<Key><Key-Return>")
+		master.bind("<Key><Key-F5>", lambda e : self.controls.session.new_sale())
+		master.bind("<Key><Key-F6>", lambda e : self.controls.session.undo_register())
+		master.bind("<Key><Key-F7>", lambda e : self.controls.session.finish_sale())
 
 		self.TopInfoLabel = tk.Label(self)
 		self.TopInfoLabel.place(relx=0.004, rely=0.004, relheight=0.057, relwidth=0.992)
@@ -231,13 +246,14 @@ class Entry (Screen):
 			, relwidth=0.971)
 		self.TextSaleSummary.configure(background="white")
 		self.TextSaleSummary.configure(cursor="")
-		self.TextSaleSummary.configure(font="TkTextFont")
+		self.TextSaleSummary.configure(font="-family {Segoe UI} -size 16 -weight normal -slant roman -underline 0 -overstrike 0")
 		self.TextSaleSummary.configure(foreground="black")
+
 		self.TextSaleSummary.configure(highlightbackground="#d9d9d9")
 		self.TextSaleSummary.configure(highlightcolor="black")
 		self.TextSaleSummary.configure(insertbackground="black")
 		self.TextSaleSummary.configure(relief="flat")
-		self.TextSaleSummary.configure(state="disabled")
+		# self.TextSaleSummary.configure(state="disabled")
 		self.TextSaleSummary.configure(selectbackground="blue")
 		self.TextSaleSummary.configure(selectforeground="white")
 		self.TextSaleSummary.configure(wrap="word")
