@@ -1,7 +1,7 @@
 from screens.login import Login
 from screens.register import Register
 from screens.entry import Entry
-from screens.product import Products,RegisterProduct, ModifyProduct, RemoveProduct, SearchProduct
+from screens.product import Products, RegisterProduct, ModifyProduct, RemoveProduct, SearchProduct
 from session import Session
 import tkinter as tk
 

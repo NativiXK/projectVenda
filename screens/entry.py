@@ -24,7 +24,13 @@ class Entry (Screen):
 		return self.__controls
 
 	def btnMenuProducts(self):
-		self.controls.popupScreens = "products"
+		self.__controls.popupScreen = "products"
+	
+	def btnMenuEmployees(self):
+		self.__controls.popupScreen = "employees"
+
+	def btnMenuCostumers(self):
+		self.__controls.popupScreen = "costumers"
 
 	def show_message(self, message):
 		super().get_var("topInfoLabelVar").set(message)
@@ -70,6 +76,7 @@ class Entry (Screen):
 		self.buttonEmployee.configure(borderwidth="1")
 		self.buttonEmployee.configure(relief="flat")
 		self.buttonEmployee.configure(text='''Employees''')
+		# self.buttonEmployee.configure(command = self.btnMenuEmployees)
 		# add button costumer
 		self.buttonCostumer = tk.Button(self.frameMenu)
 		self.buttonCostumer.place(relx=0.002, y=92, height=44, relwidth=0.98)
@@ -80,6 +87,7 @@ class Entry (Screen):
 		self.buttonCostumer.configure(borderwidth="1")
 		self.buttonCostumer.configure(relief="flat")
 		self.buttonCostumer.configure(text='''Costumers''')
+		# self.buttonCostumer.configure(command = self.btnMenuCostumers)
 		self.__menuOpened = True
 
 	def hideMenu(self):
