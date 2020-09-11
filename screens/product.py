@@ -1,4 +1,5 @@
 from screens.screen import Screen
+from tkinter import filedialog
 import tkinter as tk
 
 class Products :
@@ -100,6 +101,14 @@ class RegisterProduct:
         except:
             return
 
+    def selectImage (self):
+        file = filedialog.askopenfilename()
+        self.EntryImage.configure(state="normal")
+        self.EntryImage.delete(0, "end")
+        self.EntryImage.insert(0, file)
+        self.EntryImage.configure(state="disabled")
+        self.__master.focus_force()
+
     def inicialize(self, geometry):
         self.__master = tk.Tk()
         self.__master.geometry(geometry)
@@ -122,7 +131,7 @@ class RegisterProduct:
         self.BtnRegistrar.configure(highlightcolor="black")
         self.BtnRegistrar.configure(pady="0")
         self.BtnRegistrar.configure(relief="flat")
-        self.BtnRegistrar.configure(text='''Registrar''')
+        self.BtnRegistrar.configure(text='''Register''')
 
         self.BtnCancelar = tk.Button(self.topFrame)
         self.BtnCancelar.place(relx=0.6, rely=0.8, height=44, width=100)
@@ -135,7 +144,8 @@ class RegisterProduct:
         self.BtnCancelar.configure(highlightcolor="#ffffff")
         self.BtnCancelar.configure(pady="0")
         self.BtnCancelar.configure(relief="flat")
-        self.BtnCancelar.configure(text='''Cancelar''')
+        self.BtnCancelar.configure(text='''Cancel''')
+        self.BtnCancelar.configure(command=self.destroy)
 
         self.EntryID = tk.Entry(self.topFrame)
         self.EntryID.place(relx=0.18, rely=0.156,height=44, relwidth=0.7)
@@ -153,7 +163,7 @@ class RegisterProduct:
         self.LabelID.place(relx=0.05, rely=0.169, height=30, width=42)
         self.LabelID.configure(activebackground="#f9f9f9")
         self.LabelID.configure(activeforeground="black")
-        self.LabelID.configure(background="#d9d9d9")
+        self.LabelID.configure(background="#28a4ff")
         self.LabelID.configure(disabledforeground="#a3a3a3")
         self.LabelID.configure(foreground="#000000")
         self.LabelID.configure(highlightbackground="#d9d9d9")
@@ -178,7 +188,7 @@ class RegisterProduct:
         self.LabelDescription.place(relx=0.015, rely=0.311, height=26, width=82)
         self.LabelDescription.configure(activebackground="#f9f9f9")
         self.LabelDescription.configure(activeforeground="black")
-        self.LabelDescription.configure(background="#d9d9d9")
+        self.LabelDescription.configure(background="#28a4ff")
         self.LabelDescription.configure(disabledforeground="#a3a3a3")
         self.LabelDescription.configure(foreground="#000000")
         self.LabelDescription.configure(highlightbackground="#d9d9d9")
@@ -201,24 +211,25 @@ class RegisterProduct:
         self.LabelPrice.place(relx=0.283, rely=0.45, height=26, width=53)
         self.LabelPrice.configure(activebackground="#f9f9f9")
         self.LabelPrice.configure(activeforeground="black")
-        self.LabelPrice.configure(background="#d9d9d9")
+        self.LabelPrice.configure(background="#28a4ff")
         self.LabelPrice.configure(disabledforeground="#a3a3a3")
         self.LabelPrice.configure(foreground="#000000")
         self.LabelPrice.configure(highlightbackground="#d9d9d9")
         self.LabelPrice.configure(highlightcolor="black")
         self.LabelPrice.configure(text='''Price $''')
 
-        self.Entry1 = tk.Entry(self.topFrame)
-        self.Entry1.place(relx=0.4, rely=0.564,height=44, relwidth=0.45)
-        self.Entry1.configure(background="white")
-        self.Entry1.configure(disabledforeground="#a3a3a3")
-        self.Entry1.configure(font="TkFixedFont")
-        self.Entry1.configure(foreground="#000000")
-        self.Entry1.configure(highlightbackground="#d9d9d9")
-        self.Entry1.configure(highlightcolor="black")
-        self.Entry1.configure(insertbackground="black")
-        self.Entry1.configure(selectbackground="blue")
-        self.Entry1.configure(selectforeground="white")
+        self.EntryImage = tk.Entry(self.topFrame)
+        self.EntryImage.place(relx=0.4, rely=0.564,height=44, relwidth=0.45)
+        self.EntryImage.configure(background="white")
+        self.EntryImage.configure(disabledforeground="#000000")
+        self.EntryImage.configure(font="TkFixedFont")
+        self.EntryImage.configure(foreground="#000000")
+        self.EntryImage.configure(highlightbackground="#d9d9d9")
+        self.EntryImage.configure(highlightcolor="black")
+        self.EntryImage.configure(insertbackground="black")
+        self.EntryImage.configure(selectbackground="blue")
+        self.EntryImage.configure(selectforeground="white")
+        self.EntryImage.configure(state="disabled")
 
         self.BtnImagem = tk.Button(self.topFrame)
         self.BtnImagem.place(relx=0.18, rely=0.565, height=44, width=100)
@@ -231,8 +242,9 @@ class RegisterProduct:
         self.BtnImagem.configure(highlightcolor="black")
         self.BtnImagem.configure(pady="0")
         self.BtnImagem.configure(relief="flat")
-        self.BtnImagem.configure(text='''Selecionar imagem''')
+        self.BtnImagem.configure(text='''Select Image''')
         self.BtnImagem.configure(wraplength="100")
+        self.BtnImagem.configure(command=self.selectImage)
 
 class ModifyProduct:
 
