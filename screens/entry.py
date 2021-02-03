@@ -115,9 +115,9 @@ class Entry (Screen):
 
 		# top level bindings
 		master.unbind("<Key><Key-Return>")
-		master.bind("<Key><Key-F5>", lambda e : self.controls.session.new_sale())
-		master.bind("<Key><Key-F6>", lambda e : self.controls.session.undo_register())
-		master.bind("<Key><Key-F7>", lambda e : self.controls.session.finish_sale())
+		master.bind("<Key><KeyPress-F5>", lambda e : self.controls.session.new_sale())
+		master.bind("<Key><KeyPress-F6>", lambda e : self.controls.session.undo_register())
+		master.bind("<Key><KeyPress-F7>", lambda e : self.controls.session.finish_sale())
 
 		self.TopInfoLabel = tk.Label(self)
 		self.TopInfoLabel.place(relx=0.004, rely=0.004, relheight=0.057, relwidth=0.992)
@@ -440,3 +440,12 @@ class Entry (Screen):
 		self.ButtonFinish.configure(pady="0")
 		self.ButtonFinish.configure(relief="flat")
 		self.ButtonFinish.configure(text='''Finish (F8)''')
+
+		self.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+		self.FrameEmployee.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+		self.FrameInput.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+		self.FrameProduct.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+		self.FrameSummary.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+		self.TopInfoLabel.bind("<ButtonPress-1>", lambda e : self.hideMenu())
+
+		self.update_summary("")

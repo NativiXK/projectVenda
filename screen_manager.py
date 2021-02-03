@@ -77,7 +77,10 @@ class Manager:
     @property
     def previous(self):
         return self.__previous_screen
-
+    """ 
+    A function that takes the resolution of the screen and the ratio of X and Y
+    to generate the geometries for the screens
+    """
     def __generate_geometries(self, resolution, relx, rely):
         geometries = {}
         for screen in self.__screens:
@@ -101,6 +104,9 @@ class Manager:
                 geometries[screen] = "{}x{}+{}+{}".format(screen_res[0], screen_res[1], posx, posy)
         return geometries
 
+    """
+    Clear the previous screen
+    """
     def clear_previous(self):
         self.__previous_screen = ""
 
@@ -114,9 +120,6 @@ class Manager:
 
     def exit(self):
         self.master.destroy()
-
-    def btnEmployees(self):
-        pass
 
 
     
